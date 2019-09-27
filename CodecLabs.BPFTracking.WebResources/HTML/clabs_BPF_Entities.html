@@ -1,0 +1,165 @@
+<html>
+<head>
+    <link id="/_common/styles/fonts.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_common/styles/fonts.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_common/styles/global.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_common/styles/global.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_common/styles/theme.css.aspx?lcid=1033&amp;theme=outlook15white&amp;ver=-1357389847" href="/_common/styles/theme.css.aspx?lcid=1033&amp;theme=Outlook15White&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_forms/controls/form.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_forms/controls/form.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_forms/controls/controls.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_forms/controls/controls.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_common/styles/dialogs.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_common/styles/dialogs.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_common/styles/select.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_common/styles/select.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <link id="/_common/styles/minical.css.aspx?lcid=1033&amp;ver=-1357389847" href="/_common/styles/miniCal.css.aspx?lcid=1033&amp;ver=-1357389847" rel="stylesheet" type="text/css">
+    <script src="/webresources/ClientGlobalContext.js.aspx" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <table style="table-layout: fixed; font-family: Segoe UI,Tahoma,Arial;width:100%;" cellspacing="3" cellpadding="0">
+        <tbody>
+            <tr id="trTypeCode" height="24">
+                <td class="ms-crm-ReadField-Normal ms-crm-FieldLabel-LeftAlign" style="width:50%;max-width:240px !important; display: inline-block;">
+                    <label id="lbl_entities" for="selTypeCode" class="ms-crm-InlineEditLabelText"></label>
+                    <img alt="Required" src="/_imgs/frm_required.gif" />
+                </td>
+                <td style="display: inline-block; width:50%;">
+                    <div id="divSelTypeCode" class="ms-crm-Inline-Edit ms-crm-Inline-OptionSet noScroll" style="margin: 0; width: 100%;">
+                        <select class="ms-crm-SelectBox ms-crm-Inline-OptionSet-AutoOpen ms-crm-Inline-HideByZeroHeight-Ie7" id="selObjectType" data-id="objecttype" aria-describedby="objecttypeLabel">
+                            <option value="-1">- Select a Process first -</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        //# sourceURL=/WebResources/clabs_GDPR_Entities.html
+        var _clientUrl = window.parent.Xrm.Page.context.getClientUrl();
+        var _apiURL = '/api/data/v9.0/';
+        var _queryParameters = '';
+
+        $(function () {
+            if (window.parent.Xrm.Page.ui.getFormType() != 1) { return; }
+
+            _queryParameters = getQueryParameters();
+            setLabel();
+
+            loadEvents();
+            //loadEntities();
+        });
+
+        function isNullOrUndefined(obj) {
+            return obj === null || obj === undefined;
+        }
+
+        function getQueryParameters() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var dataParam = urlParams.get('data');
+
+            if (isNullOrUndefined(dataParam))
+                dataParam = urlParams.get('Data');
+
+            return dataParam;
+        }
+
+        function setLabel() {
+            $('#lbl_entities').text(JSON.parse(_queryParameters).EntitiesLabel);
+        }
+
+        function loadEvents() {
+            $("#selObjectType").on("change", function () {
+                var entityName = $("option:selected", this).data("logicalname");
+
+                if (entityName) {
+                    window.parent.Xrm.Page.getAttribute(JSON.parse(_queryParameters).LogicalNameField).setValue(entityName);
+                } else {
+                    window.parent.Xrm.Page.getAttribute("clabs_entityname").setValue(null);
+                }
+            });
+
+            window.parent.Xrm.Page.getAttribute("clabs_processid").addOnChange(() => {
+                $("#selObjectType").find('option').remove();
+                $("#selObjectType").append('<option value="-" value="-" selected>-</option>');
+
+                loadEntities();
+            });
+        }
+
+        function loadEntities() {
+            //var query = "EntityDefinitions?$select=LogicalName,ObjectTypeCode,DisplayName";
+            //doGet(query, entitiesCallback, defaultFailCallback);
+
+            var processId = window.parent.Xrm.Page.getAttribute("clabs_processid").getValue();
+
+            if (processId && processId[0] && processId[0].id) {
+                var id = processId[0].id.replace("{", "").replace("}", "");
+                var entityName = "workflows(" + id + ")";
+                var select = "?$select=uidata";
+
+                var query = entityName + select;
+
+                doGet(query, (data) => {
+                    var json = JSON.parse(data.uidata);
+                    var uiDataValues = json.BusinessProcessFlowEntities.$values;
+                    var mappedValues = $.map(uiDataValues, (item) => { return item.EntityLogicalName });
+                    var uniqueValues = mappedValues.filter((item, i, a) => { return i == a.indexOf(item); });
+
+                    var control = $("#selObjectType");
+                    for (var i = 0; i < uniqueValues.length; i++) {
+                        $(control).append('<option value="' + uniqueValues[i] + '" data-logicalname="' + uniqueValues[i] + '">' + uniqueValues[i] + '</option>');
+                    }
+                }, (req) => {
+                    debugger;
+                });
+            }
+        }
+
+        function entitiesCallback(result) {
+            var col = result.value.filter(function (obj) {
+                return obj.DisplayName.UserLocalizedLabel;
+            });
+
+            col = col.sort(function (a, b) {
+                var aName = a.DisplayName.UserLocalizedLabel.Label.toLowerCase();
+                var bName = b.DisplayName.UserLocalizedLabel.Label.toLowerCase();
+                return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+            });
+
+            var c = $("#selObjectType");
+            loadSelect(c, col, function (control, k, v) {
+                if (!v.DisplayName.UserLocalizedLabel) { return; }
+
+                $(control).append('<option value="' + v.ObjectTypeCode + '" data-displayname="' + v.DisplayName.UserLocalizedLabel.Label + '" data-logicalname="' + v.LogicalName + '">' + v.DisplayName.UserLocalizedLabel.Label + " (" + v.LogicalName + ")" + '</option>');
+            });
+
+            //$('#selObjectType').change();
+        }
+
+        function loadSelect(control, dataset, loader) {
+            //Clear old results
+            $(control).children().remove().end();
+            $(control).append('<option value="-" value="-" selected>-</option>');
+
+            $.each(dataset, function (k, v) {
+                loader(control, k, v);
+            });
+        }
+
+        function defaultFailCallback(req) {
+            var errorObj = JSON.parse(req.responseText);
+            alert("Request failed: " + errorObj.error.message);
+        }
+
+        function doGet(query, successCallback, failCallback) {
+            $.ajax({
+                method: "GET",
+                headers: {
+                    "OData-MaxVersion": "4.0",
+                    "OData-Version": "4.0",
+                    "Accept": "application/json",
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                url: _clientUrl + _apiURL + query
+            }).done(successCallback).fail(failCallback);
+        }
+    </script>
+</body>
+</html>

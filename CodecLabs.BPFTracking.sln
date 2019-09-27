@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.73
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodecLabs.BPFTracking.Plugins", "CodecLabs.BPFTracking.Plugins\CodecLabs.BPFTracking.Plugins.csproj", "{FFBCAF97-FBF5-40A8-B6D7-3A12652BEBC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodecLabs.BPFTracking.Plugins.Test", "CodecLabs.BPFTracking.Plugins.Test\CodecLabs.BPFTracking.Plugins.Test.csproj", "{7DDD58D1-A65C-4304-BEFF-5E6B03E91A8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodecLabs.BPFTracking.Workflows", "CodecLabs.BPFTracking.Workflows\CodecLabs.BPFTracking.Workflows.csproj", "{C688B396-44F5-4CD5-877B-1AE4691EF01A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodecLabs.BPFTracking.Workflows.Test", "CodecLabs.BPFTracking.Workflows.Test\CodecLabs.BPFTracking.Workflows.Test.csproj", "{E7C9424C-828F-41A4-9B68-5EA6BBE4CB87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodecLabs.BPFTracking.WebResources", "CodecLabs.BPFTracking.WebResources\CodecLabs.BPFTracking.WebResources.csproj", "{AD71C510-14C2-4D72-89C4-EE353D3CE77D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{55B46A09-335B-4B66-937C-3C47B13386F4}"
+	ProjectSection(SolutionItems) = preProject
+		Solutions\CodecLabsBPFTracking_1_0_1_0.zip = Solutions\CodecLabsBPFTracking_1_0_1_0.zip
+		Solutions\CodecLabsBPFTracking_1_0_1_0_managed.zip = Solutions\CodecLabsBPFTracking_1_0_1_0_managed.zip
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFBCAF97-FBF5-40A8-B6D7-3A12652BEBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBCAF97-FBF5-40A8-B6D7-3A12652BEBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBCAF97-FBF5-40A8-B6D7-3A12652BEBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBCAF97-FBF5-40A8-B6D7-3A12652BEBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DDD58D1-A65C-4304-BEFF-5E6B03E91A8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DDD58D1-A65C-4304-BEFF-5E6B03E91A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DDD58D1-A65C-4304-BEFF-5E6B03E91A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DDD58D1-A65C-4304-BEFF-5E6B03E91A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C688B396-44F5-4CD5-877B-1AE4691EF01A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C688B396-44F5-4CD5-877B-1AE4691EF01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C688B396-44F5-4CD5-877B-1AE4691EF01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C688B396-44F5-4CD5-877B-1AE4691EF01A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7C9424C-828F-41A4-9B68-5EA6BBE4CB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7C9424C-828F-41A4-9B68-5EA6BBE4CB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7C9424C-828F-41A4-9B68-5EA6BBE4CB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7C9424C-828F-41A4-9B68-5EA6BBE4CB87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD71C510-14C2-4D72-89C4-EE353D3CE77D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD71C510-14C2-4D72-89C4-EE353D3CE77D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD71C510-14C2-4D72-89C4-EE353D3CE77D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD71C510-14C2-4D72-89C4-EE353D3CE77D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87542A32-13C9-40E9-87CB-E0B4D4FD5D46}
+	EndGlobalSection
+EndGlobal
